@@ -15,11 +15,15 @@ Project is created with:
 	
 ## Setup
 To run this project:
-* Clone this repo
-* open a terminal in the root directory of project
-* Build the image
-* docker build -t myfan .
-* Run the image
-* docker run -p 5000:5000 myfan
-* Once everything has started up, you should be able to access the webapp via http://localhost:5000/ on your host machine.
+1. Clone this repo
+2. open a terminal in the root directory of project
+3. Build the image
+```
+ docker build -t myfan .
+```
+4. Run the image
+```
+ docker run -p 5000:5000 myfan
+```
+5. Once everything has started up, you should be able to access the webapp via http://localhost:5000/ on your host machine.
 
