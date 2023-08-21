@@ -15,5 +15,5 @@ Project is created with:
 	
 ## Setup
 To run this project, you can use the dockerfile:
-docker build -t myfan .
-docker run -p 5000:5000 myfan
+* docker build -t myfan .
+* docker run -p 5000:5000 myfan
