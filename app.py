@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, request
+from flask import Flask, render_template, Response, request, jsonify
 
 app = Flask(__name__)
 app.config['title'] = 'Fan App'
@@ -17,7 +17,7 @@ def index():
 # Get initial values
 @app.route('/api/fan/init')
 def init():
-    return fan_init
+    return jsonify(fan_init)
 
 # Increase the speed of the fan
 @app.route('/api/fan/speedup')
@@ -27,10 +27,10 @@ def speed_up():
     if _speed == None:
         return Response(status='400')
     if _speed not in ['0','1','2','3']:
-        return Response('0' , status = '200')
+        return jsonify({'speed' :'0'} )
     # to make sure the speed is between 0 and 3
     _speed = (int(_speed)+ 1) % 4    
-    return Response( str(_speed) , status='200')
+    return jsonify({'speed' : str(_speed)})
 
 # Change the direction of the fan
 @app.route('/api/fan/reverse')
@@ -42,7 +42,7 @@ def reverse():
         _dir ='reverse'
     else:
         _dir = 'normal'
-    return Response( _dir , status='200')
+    return jsonify({'direction' : _dir}) 
 
 # Check Server Error- Just for test cases
 @app.route('/api/fan/checkservererror')
@@ -52,12 +52,12 @@ def check_server_error():
 # Handle Not Found Error
 @app.errorhandler(404)
 def page_not_found(e):
-    return Response('Not Found', status='404')
+    return jsonify({'message ': 'Not Found'}), 404
 
 # Handle Server Error
 @app.errorhandler(Exception)
 def server_error(e):
-    return Response('Server Error', status='500')
+    return jsonify({'message ':'Server Error'}), 500
     
 
 if __name__ == '__main__':

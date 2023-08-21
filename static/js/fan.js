@@ -39,7 +39,7 @@ window.onload = function () {
     xhttp.onreadystatechange = function () {
 
       if (this.readyState == 4 && this.status == 200) {
-        fan_init.speed = this.responseText
+        fan_init.speed = JSON.parse(this.responseText).speed
         setSpeed(fan_init.speed)
       }
       else if (this.readyState == 4) {
@@ -59,7 +59,7 @@ window.onload = function () {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        fan_init.direction = this.responseText
+        fan_init.direction = JSON.parse(this.responseText).direction
         setDirection(fan_init.direction);
       }
       else if (this.readyState == 4) {

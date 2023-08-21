@@ -21,19 +21,19 @@ class TestFanApp(unittest.TestCase):
     def test_speed_up(self):
         for i in range(4):
             response = self.client.get('/api/fan/speedup', headers = {'speed' : i} )
-            data = json.loads(response.data)
+            data =int( json.loads(response.data)['speed'])
             self.assertEqual(response.status_code, 200)
             self.assertTrue( data == ((i + 1) % 4))
 
     def test_normal_reverse(self):
         response = self.client.get('/api/fan/reverse', headers = {'dir' : 'normal'})
-        data = response.data.decode()
+        data = json.loads(response.data)['direction']
         self.assertEqual(response.status_code, 200)    
         self.assertEqual(data, 'reverse')
         
     def test_reverse_normal(self):
         response = self.client.get('/api/fan/reverse', headers = {'dir' : 'reverse'})
-        data = response.data.decode()
+        data = json.loads(response.data)['direction']
         self.assertEqual(response.status_code, 200)    
         self.assertEqual(data, 'normal')
 
@@ -42,7 +42,7 @@ class TestFanApp(unittest.TestCase):
         initial_speed = [-1, float('-inf'), -1.5 , 4, float('inf'), 100.4, 'sr', None, False]
         for i in initial_speed:
             response = self.client.get('/api/fan/speedup', headers = {'speed' : i} )
-            data = json.loads(response.data)
+            data = int(json.loads(response.data)['speed'])
             self.assertEqual(response.status_code, 200)
             self.assertTrue( data == 0)
 
@@ -55,7 +55,7 @@ class TestFanApp(unittest.TestCase):
         initial_dir = [-1, float('-inf'), -1.5 , 4, float('inf'), 100.4, 'sr', None, False]
         for i in initial_dir:
             response = self.client.get('/api/fan/reverse', headers = {'dir' : i})
-            data = response.data.decode()
+            data = json.loads(response.data)['direction']
             self.assertEqual(response.status_code, 200)    
             self.assertEqual(data, 'normal')
             
